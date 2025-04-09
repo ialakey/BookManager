@@ -24,8 +24,7 @@
 Клонируйте репозиторий с GitHub:
 
 ```bash
-git clone https://github.com/ialakey/bookstore-app.git
-cd bookstore-app
+git clone https://github.com/ialakey/BookManager
 ```
 
 ### Шаг 2: Собрать проект с помощью Gradle
