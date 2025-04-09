@@ -17,7 +17,7 @@
 Клонируйте репозиторий с GitHub:
 
 ```bash
-git clone https://github.com/yourusername/bookstore-app.git
+git clone https://github.com/ialakey/bookstore-app.git
 cd bookstore-app
 ```
 
