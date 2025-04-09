@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список книг</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Список книг</h2>
+
+    <form class="row mb-3" method="get" th:action="@{/books}">
+        <div class="col">
+            <input type="text" name="title" class="form-control" placeholder="Название"
+                   th:value="${title}">
+        </div>
+        <div class="col">
+            <input type="text" name="brand" class="form-control" placeholder="Издательство"
+                   th:value="${brand}">
+        </div>
+        <div class="col">
+            <input type="number" name="year" class="form-control" placeholder="Год"
+                   th:value="${year}">
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary">Фильтровать</button>
+        </div>
+        <div class="col text-end">
+            <a class="btn btn-success" th:href="@{/books/new}">Добавить книгу</a>
+        </div>
+    </form>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Код</th>
+            <th>Название</th>
+            <th>Год</th>
+            <th>Издательство</th>
+            <th>Склад</th>
+            <th>Цена</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.vendorCode}"></td>
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.year}"></td>
+            <td th:text="${book.brand}"></td>
+            <td th:text="${book.stock}"></td>
+            <td th:text="${book.price}"></td>
+            <td>
+                <a class="btn btn-sm btn-warning" th:href="@{/books/edit/{id}(id=${book.id})}">Редактировать</a>
+                <a class="btn btn-sm btn-danger" th:href="@{/books/delete/{id}(id=${book.id})}">Удалить</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <nav>
+        <ul class="pagination">
+            <li class="page-item" th:classappend="${books.hasPrevious()} ?: 'disabled'">
+                <a class="page-link" th:href="@{|/books?page=${books.number - 1}&title=${title}&brand=${brand}&year=${year}|}">Предыдущая</a>
+            </li>
+            <li class="page-item disabled"><span class="page-link">Страница <span th:text="${books.number + 1}"></span> из <span th:text="${books.totalPages}"></span></span></li>
+            <li class="page-item" th:classappend="${books.hasNext()} ?: 'disabled'">
+                <a class="page-link" th:href="@{|/books?page=${books.number + 1}&title=${title}&brand=${brand}&year=${year}|}">Следующая</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>
