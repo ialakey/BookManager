@@ -2,7 +2,6 @@ package com.alakey.bookmanager.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -33,11 +32,12 @@ public class SecurityConfig {
                         .requestMatchers("/api/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
-                .formLogin(Customizer.withDefaults())
-                .logout(logout -> logout.logoutSuccessUrl("/login?logout"))
-                .httpBasic();
+                .formLogin(form -> form
+                        .defaultSuccessUrl("/books", true)
+                        .permitAll()
+                )
+                .logout(logout -> logout.logoutSuccessUrl("/login?logout"));
 
         return http.build();
     }
 }
-
